@@ -3,6 +3,8 @@ from math import log10, sqrt
 from tabulate import tabulate
 import sys
 
+# DECLARACIÓN DE FUNCIONES
+################################
 def exists(array, target):
     for x in array:
         if (x == target):
@@ -27,21 +29,21 @@ def sim(documento1, documento2, TFIDF, index1, index2):
     result = round(num/(sqrt(den1) * sqrt(den2)),3)
 
     return result
+################################
+
+# Programa principal
 
 parser = argparse.ArgumentParser(description="Programa de sistemas de recomendación")
 parser.add_argument('file', type=argparse.FileType('r'))
 parser.add_argument('-o', '--out', type=argparse.FileType('w', encoding='utf-8'))
 args = parser.parse_args()
 documents = args.file.readlines()
-
 if args.out is not None:
     sys.stdout = args.out
-
 
 terms = []
 stopwords = []
 s = open("stopwords.txt", 'r')
-
 for i in s.readlines():
     i = i.replace("\n","")
     if (exists(stopwords,i) == False):
