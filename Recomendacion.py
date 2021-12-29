@@ -1,6 +1,7 @@
 import argparse
 from math import log10, sqrt
 from tabulate import tabulate
+import sys
 
 def exists(array, target):
     for x in array:
@@ -29,8 +30,13 @@ def sim(documento1, documento2, TFIDF, index1, index2):
 
 parser = argparse.ArgumentParser(description="Programa de sistemas de recomendación")
 parser.add_argument('file', type=argparse.FileType('r'))
+parser.add_argument('-o', '--out', type=argparse.FileType('w', encoding='utf-8'))
 args = parser.parse_args()
 documents = args.file.readlines()
+
+if args.out is not None:
+    sys.stdout = args.out
+
 
 terms = []
 stopwords = []
@@ -100,3 +106,5 @@ sim_matrix.insert(0, firstrow)
 
 print("\nMATRIZ DE SIMILITUD\n")       
 print(tabulate(sim_matrix, tablefmt="fancy_grid"))
+
+print()
